@@ -14,3 +14,14 @@ A high-performance, responsive Flutter News Application featuring an elegant int
 
 ---
 
+## 📦 Core Optimization Packages
+
+This project relies on premium open-source packages to handle core infrastructure logic:
+
+* **[`equatable`](https://pub.dev/packages/equatable):** Implements value-based comparison equality checks across model payloads to reduce unneeded widget pipeline reconstruction cycles.
+* **[`hive_flutter`](https://pub.dev/packages/hive_flutter):** A lightweight, blazing fast NoSQL key-value database written natively in Dart, serving as our offline cache storage house.
+* **[`easy_localization`](https://pub.dev/packages/easy_localization):** Manages multi-language JSON translation bundles and layout direction configurations seamlessly.
+* **[`provider`](https://pub.dev/packages/provider):** Standard dependency injection state notifier container coordinating global setting conditions.
+* **[`cached_network_image`](https://pub.dev/packages/cached_network_image):** Handles remote image delivery optimization by caching assets locally on disk storage to save user bandwidth.
+
+---
