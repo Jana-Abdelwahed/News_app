@@ -1,12 +1,13 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:news/prefs/theme_prefs.dart';
-import 'package:news/providers/theme_provider.dart';
-import 'package:news/screens/filter/filter_screen.dart';
-import 'package:news/screens/search_screen.dart';
-import 'package:news/utils/app_routes.dart';
-import 'package:news/utils/app_themes.dart';
-import 'package:news/utils/local_storage_manager.dart';
+import 'package:news/Features/Presentation/pages/filter/filter_screen.dart';
+import 'package:news/Features/Presentation/pages/search_screen.dart';
+import 'package:news/core/prefs/theme_prefs.dart';
+import 'package:news/core/prefs/theme_provider.dart';
+import 'package:news/core/services/service_locator.dart';
+import 'package:news/core/utils/app_routes.dart';
+import 'package:news/core/utils/app_themes.dart';
+import 'package:news/core/utils/local_storage_manager.dart';
 import 'package:provider/provider.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
@@ -17,6 +18,8 @@ void main() async {
   timeago.setLocaleMessages('en', timeago.EnMessages());
   timeago.setLocaleMessages('ar', timeago.ArMessages());
   bool isDark = await ThemePrefs.getTheme() ?? false;
+  WidgetsFlutterBinding.ensureInitialized();
+  await initServiceLocator();
   runApp(
     EasyLocalization(
       supportedLocales: [Locale('en'), Locale('ar')],
