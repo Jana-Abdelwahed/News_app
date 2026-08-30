@@ -1,6 +1,13 @@
-# 📰 News App (Offline-First)
+# 📰 News App 
 
 A high-performance, responsive Flutter News Application featuring an elegant interface, multi-language localization support, dynamic dark/light skin adjustments, and an enterprise-grade **Offline-First Data Architecture** utilizing value comparison optimization.
+
+---
+## 🎬 App Demo
+
+<p align="center">
+  <img src="assets/news demo.gif" alt="News App Demo" width="300">
+</p>
 
 ---
 
