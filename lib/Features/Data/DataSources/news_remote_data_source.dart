@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:http/http.dart' as http;
 import 'package:news/Features/Data/models/articleModel.dart';
@@ -27,14 +28,22 @@ class NewsRemoteDataSourceImpl implements NewsRemoteDataSource {
       'category': categoryId,
     });
 
-    final response = await client.get(uri);
-    final json = jsonDecode(response.body);
+    try {
+      final response = await client.get(uri);
+      final json = jsonDecode(response.body);
 
-    if (response.statusCode == 200) {
-      final List sourcesJson = json['sources'] ?? [];
-      return sourcesJson.map((s) => SourceModel.fromJson(s)).toList();
-    } else {
-      throw Exception(json['message'] ?? 'Failed to fetch sources');
+      if (response.statusCode == 200) {
+        final List sourcesJson = json['sources'] ?? [];
+        return sourcesJson.map((s) => SourceModel.fromJson(s)).toList();
+      } else {
+        throw Exception(json['message'] ?? 'Failed to fetch sources');
+      }
+    } on SocketException {
+      rethrow;
+    } on http.ClientException {
+      rethrow;
+    } catch (e) {
+      rethrow;
     }
   }
 
@@ -44,22 +53,41 @@ class NewsRemoteDataSourceImpl implements NewsRemoteDataSource {
     String query,
     int page,
   ) async {
-    final uri = Uri.https(ApiConstants.baseUrl, EndPoints.newsApi, {
+    final Map<String, String> queryParameters = {
       'apiKey': ApiConstants.api_key,
-      'sources': sourceId,
-      'q': query,
       'page': page.toString(),
       'pageSize': '10',
-    });
+    };
 
-    final response = await client.get(uri);
-    final json = jsonDecode(response.body);
+    if (sourceId.isNotEmpty) {
+      queryParameters['sources'] = sourceId;
+    }
+    if (query.isNotEmpty) {
+      queryParameters['q'] = query;
+    }
 
-    if (response.statusCode == 200) {
-      final List articlesJson = json['articles'] ?? [];
-      return articlesJson.map((a) => ArticleModel.fromJson(a)).toList();
-    } else {
-      throw Exception(json['message'] ?? 'Failed to fetch articles');
+    final uri = Uri.https(
+      ApiConstants.baseUrl,
+      EndPoints.newsApi,
+      queryParameters,
+    );
+
+    try {
+      final response = await client.get(uri);
+      final json = jsonDecode(response.body);
+
+      if (response.statusCode == 200) {
+        final List articlesJson = json['articles'] ?? [];
+        return articlesJson.map((a) => ArticleModel.fromJson(a)).toList();
+      } else {
+        throw Exception(json['message'] ?? 'Failed to fetch articles');
+      }
+    } on SocketException {
+      rethrow;
+    } on http.ClientException {
+      rethrow;
+    } catch (e) {
+      rethrow;
     }
   }
 }

@@ -24,7 +24,11 @@ class NewsLocalDataSourceImpl implements NewsLocalDataSource {
   List<SourceModel>? getCachedSources(String categoryId) {
     final cached = LocalStorageManager.getCachedArticles('sources_$categoryId');
     if (cached == null) return null;
-    return cached.map((item) => SourceModel.fromJson(item)).toList();
+
+    return cached.map((item) {
+      final jsonMap = Map<String, dynamic>.from(item as Map);
+      return SourceModel.fromJson(jsonMap);
+    }).toList();
   }
 
   @override
@@ -40,6 +44,10 @@ class NewsLocalDataSourceImpl implements NewsLocalDataSource {
   List<ArticleModel>? getCachedArticles(String cacheKey) {
     final cached = LocalStorageManager.getCachedArticles(cacheKey);
     if (cached == null) return null;
-    return cached.map((item) => ArticleModel.fromJson(item)).toList();
+
+    return cached.map((item) {
+      final jsonMap = Map<String, dynamic>.from(item as Map);
+      return ArticleModel.fromJson(jsonMap);
+    }).toList();
   }
 }
