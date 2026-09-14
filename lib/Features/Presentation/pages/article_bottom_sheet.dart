@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:news/Features/Domain/entities/article_entity.dart';
 import 'package:news/Features/Presentation/pages/web_view_screen.dart';
 import 'package:news/core/prefs/theme_provider.dart';
+import 'package:news/core/utils/app_colors.dart';
+import 'package:news/core/utils/app_size.dart';
 import 'package:provider/provider.dart';
 
-class ArticleDetailsBottomSheet extends StatelessWidget {
+class article_bottom_sheet extends StatelessWidget {
   final ArticleEntity article;
 
-  const ArticleDetailsBottomSheet({super.key, required this.article});
+  const article_bottom_sheet({super.key, required this.article});
 
   static void show(BuildContext context, ArticleEntity article) {
     showModalBottomSheet(
@@ -16,7 +18,7 @@ class ArticleDetailsBottomSheet extends StatelessWidget {
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
       barrierColor: Colors.black54,
-      builder: (_) => ArticleDetailsBottomSheet(article: article),
+      builder: (_) => article_bottom_sheet(article: article),
     );
   }
 
@@ -25,66 +27,71 @@ class ArticleDetailsBottomSheet extends StatelessWidget {
     final themeProvider = Provider.of<ThemeProvider>(context);
     final isDark = themeProvider.isDark();
     final theme = Theme.of(context);
+    final width = context.width;
+    final height = context.height;
 
-    final modalBgColor = isDark ? Colors.white : Colors.black;
-    final textColor = isDark ? Colors.black : Colors.white;
-    final buttonBgColor = isDark ? Colors.black : Colors.white;
-    final buttonTextColor = isDark ? Colors.white : Colors.black;
+    final modalBgColor = isDark ? AppColors.white_color : AppColors.black_color;
+    final textColor = isDark ? AppColors.black_color : AppColors.white_color;
+    final buttonBgColor = isDark
+        ? AppColors.black_color
+        : AppColors.white_color;
+    final buttonTextColor = isDark
+        ? AppColors.white_color
+        : AppColors.black_color;
 
     return Padding(
       padding: EdgeInsets.only(
-        left: 16.0,
-        right: 16.0,
-        bottom: MediaQuery.of(context).viewInsets.bottom + 24.0,
+        left: width * 0.04,
+        right: width * 0.04,
+        bottom: MediaQuery.of(context).viewInsets.bottom + height * 0.03,
       ),
       child: Material(
         color: modalBgColor,
-        borderRadius: BorderRadius.circular(16.0),
+        borderRadius: BorderRadius.circular(width * 0.06),
         clipBehavior: Clip.antiAlias,
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: EdgeInsets.all(width * 0.04),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               if (article.urlToImage != null && article.urlToImage!.isNotEmpty)
                 ClipRRect(
-                  borderRadius: BorderRadius.circular(12.0),
+                  borderRadius: BorderRadius.circular(width * 0.04),
                   child: Image.network(
                     article.urlToImage!,
-                    height: 180,
+                    height: height * 0.22,
                     width: double.infinity,
                     fit: BoxFit.cover,
                     errorBuilder: (context, error, stackTrace) => Container(
-                      height: 180,
+                      height: height * 0.22,
                       color: Colors.grey.shade300,
                       child: const Icon(Icons.broken_image, size: 40),
                     ),
                   ),
                 ),
-              const SizedBox(height: 12.0),
-
+              SizedBox(height: height * 0.015),
               Text(
                 article.content ?? article.description ?? '',
                 style: theme.textTheme.labelLarge?.copyWith(
                   color: textColor,
-                  fontSize: 13,
-                  height: 1.4,
+                  fontSize: width * 0.035,
+                  height: 1.5,
+                  fontWeight: FontWeight.w500,
                 ),
               ),
-              const SizedBox(height: 16.0),
-
+              SizedBox(height: height * 0.02),
               if (article.url != null && article.url!.isNotEmpty)
                 SizedBox(
                   width: double.infinity,
-                  height: 48,
+                  height: height * 0.07,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: buttonBgColor,
                       foregroundColor: buttonTextColor,
                       elevation: 0,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12.0),
+                        borderRadius: BorderRadius.circular(width * 0.04),
                       ),
                     ),
                     onPressed: () {
@@ -102,7 +109,7 @@ class ArticleDetailsBottomSheet extends StatelessWidget {
                       style: TextStyle(
                         color: buttonTextColor,
                         fontWeight: FontWeight.bold,
-                        fontSize: 14,
+                        fontSize: width * 0.04,
                       ),
                     ),
                   ),

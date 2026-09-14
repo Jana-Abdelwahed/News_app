@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:news/Features/Domain/entities/article_entity.dart';
-import 'package:news/Features/Presentation/pages/ArticleDetailsBottomSheet.dart';
+import 'package:news/Features/Presentation/pages/article_bottom_sheet.dart';
 
 class NewsItem extends StatelessWidget {
   final ArticleEntity article;
@@ -13,7 +13,7 @@ class NewsItem extends StatelessWidget {
       clipBehavior: Clip.antiAlias,
       child: InkWell(
         onTap: () {
-          ArticleDetailsBottomSheet.show(context, article);
+          article_bottom_sheet.show(context, article);
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
