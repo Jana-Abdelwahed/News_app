@@ -5,7 +5,9 @@ import 'theme_prefs.dart';
 
 class ThemeProvider extends ChangeNotifier {
   ThemeMode themeMode;
+
   ThemeProvider({required this.themeMode});
+
   void changeTheme(ThemeMode newThemeMode) {
     if (newThemeMode == themeMode) {
       return;
@@ -15,11 +17,15 @@ class ThemeProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  bool isDark() {
+    return themeMode == ThemeMode.dark;
+  }
+
   bool isLight() {
-    return themeMode == ThemeMode.light ? true : false;
+    return themeMode == ThemeMode.light;
   }
 
   String returnText() {
-    return themeMode == ThemeMode.light ? 'light'.tr() : 'dark'.tr();
+    return isDark() ? 'dark'.tr() : 'light'.tr();
   }
 }
