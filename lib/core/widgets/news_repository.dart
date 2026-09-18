@@ -1,5 +1,5 @@
 import 'package:news/core/api/api_manager.dart';
-import 'package:news/core/utils/local_storage_manager.dart';
+import 'package:news/core/services/local_storage_manager.dart';
 import 'package:news/core/widgets/news_response.dart';
 import 'package:news/core/widgets/source_response.dart';
 

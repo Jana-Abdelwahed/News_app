@@ -1,6 +1,6 @@
 import 'package:news/Features/Data/models/articleModel.dart';
 import 'package:news/Features/Data/models/sourceModel.dart';
-import 'package:news/core/utils/local_storage_manager.dart';
+import 'package:news/core/services/local_storage_manager.dart';
 
 abstract class NewsLocalDataSource {
   Future<void> cacheSources(String categoryId, List<SourceModel> sources);
